@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KxLib", "KxLib\KxLib.csproj", "{2BEEFF0B-2CB3-40BE-8413-BFFAE09148FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KxLib.Database", "KxLib.Database\KxLib.Database.csproj", "{8A5DB322-846D-4BE4-A3EE-9378BC2B1F92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KxLib.UI", "KxLib.UI\KxLib.UI.csproj", "{52B733F8-7584-488B-A8AD-43BBC37ABB45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BEEFF0B-2CB3-40BE-8413-BFFAE09148FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BEEFF0B-2CB3-40BE-8413-BFFAE09148FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BEEFF0B-2CB3-40BE-8413-BFFAE09148FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BEEFF0B-2CB3-40BE-8413-BFFAE09148FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5DB322-846D-4BE4-A3EE-9378BC2B1F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5DB322-846D-4BE4-A3EE-9378BC2B1F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5DB322-846D-4BE4-A3EE-9378BC2B1F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5DB322-846D-4BE4-A3EE-9378BC2B1F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B733F8-7584-488B-A8AD-43BBC37ABB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B733F8-7584-488B-A8AD-43BBC37ABB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B733F8-7584-488B-A8AD-43BBC37ABB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B733F8-7584-488B-A8AD-43BBC37ABB45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
