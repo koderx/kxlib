@@ -2,12 +2,12 @@
 using System.Threading;
 using System.Windows.Controls;
 
-namespace KxLib.Utilities.Control {
+namespace KxLib.UI {
     public delegate void EventHandler(object sender, EventArgs e);
     /// <summary>
     /// WPF中使用的平滑进度条
     /// </summary>
-    public class SmoothProgressBar {
+    public class KxSmoothProgressBar {
         private delegate void InvokeCallback(int value);
         private ProgressBar target;
         private Thread animThread;
@@ -20,9 +20,9 @@ namespace KxLib.Utilities.Control {
         private bool right = true;
         public EventHandler Complete;
 
-        public SmoothProgressBar(ProgressBar target) : this(target, 100) { }
+        public KxSmoothProgressBar(ProgressBar target) : this(target, 100) { }
 
-        public SmoothProgressBar(ProgressBar target, int maxValue) {
+        public KxSmoothProgressBar(ProgressBar target, int maxValue) {
             this.target = target;
             SetMaxValue(maxValue);
             target.Minimum = 0;

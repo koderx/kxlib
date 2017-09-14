@@ -1,0 +1,700 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="WindowStyle" TargetType="Window">
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <!--<Setter Property="Title" Value="{Binding Title}"/>-->
+    </Style>
+
+    <ControlTemplate x:Key="WindowTemplate" TargetType="Window">
+        <!--若不设置margin，阴影无法显示（被挡住了）-->
+        <Border x:Name="FussWindowBorder" CornerRadius="0" Margin="8" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="8" ShadowDepth="0" Color="#00000000"/>
+            </Border.Effect>
+            <Border x:Name="BorderBack" CornerRadius="0" Background="{DynamicResource BackgroundColor}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Name="TitleBar" CornerRadius="0" Style="{DynamicResource HeadStyle}" Grid.Row="0">
+                        <DockPanel Margin="0">
+                            <Image DockPanel.Dock="Left" Name="ImgApp" VerticalAlignment="Top" Margin="4 4 0 0" Width="24" Height="24"></Image>
+                            <TextBlock DockPanel.Dock="Left" Name="TitleText" VerticalAlignment="Top" Margin="8 6 0 0"  FontSize="16" Foreground="{DynamicResource TitleTextColor}"/>
+                            <StackPanel Name="ControlBox" DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right" Height="28" VerticalAlignment="Top">
+                                <Button Name="SkinButton" Content="&#xe62a;" Style="{DynamicResource ControlButton}" ToolTip="换肤"/>
+                                <Button Name="MinButton" Content="&#xe600;" Style="{DynamicResource ControlButton}" ToolTip="最小化"/>
+                                <Button Name="MaxButton" Content="&#xe610;" Style="{DynamicResource ControlButton}" ToolTip="最大化"/>
+                                <Button Name="CloseButton" Content="&#xe622;" Style="{DynamicResource ControlCloseButton}" ToolTip="关闭"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <ContentPresenter Grid.Row="1" />
+                </Grid>
+            </Border>
+        </Border>
+    </ControlTemplate>
+
+    <!-- 标题栏背景颜色 -->
+    <Style x:Key="HeadStyle" TargetType="Border">
+        <Setter Property="Background" Value="#E9E9E8"></Setter>
+    </Style>
+    <!-- 定义文字样式 -->
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource DefaultTextColor}"/>
+        <Setter Property="FontFamily" Value="Microsoft YaHei UI"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
+    </Style>
+    <Style TargetType="{x:Type TextElement }">
+        <Setter Property="FontFamily" Value="Microsoft YaHei UI"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
+    </Style>
+
+    <!-- 定义ToolTip样式 -->
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border BorderThickness="1" BorderBrush="Black" Background="{DynamicResource BackgroundColor}">
+                        <ContentPresenter x:Name="contentPresenter" Height="{TemplateBinding Height}" Width="{ TemplateBinding Width}"
+                          ContentTemplate="{TemplateBinding ContentTemplate }" Margin="4,2"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- 定义字体 -->
+    <Style x:Key="iconfont" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/KxLib.UI;Component/Resources/#iconfont"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#999999"/>
+    </Style>
+
+    <!--定义控制栏按钮样式-->
+    <Style x:Key="ControlButton" TargetType="Button">
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Back" Background="Transparent">
+                        <TextBlock x:Name="Fore" Text="{TemplateBinding Content}" Style="{DynamicResource iconfont}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#3A95DE"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                            <Setter Property="Border.CornerRadius" TargetName="Back" Value="10"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#267CC2"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ControlCloseButton" TargetType="Button" BasedOn="{StaticResource ControlButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Back" Background="Transparent">
+                        <TextBlock x:Name="Fore" Text="{TemplateBinding Content}" Style="{DynamicResource iconfont}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#D44027"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                            <Setter Property="Border.CornerRadius" TargetName="Back" Value="10"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#A62A15"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--定义分割线样式-->
+    <Style x:Key="warpper" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MainColor}"/>
+    </Style>
+
+    <!--定义按钮样式-->
+    <Style TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="#fff"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <!--控件模板-->
+                <ControlTemplate TargetType="Button">
+                    <!--背景色-->
+                    <Border x:Name="Back" Opacity="1" CornerRadius="3" Background="#1F74DE">
+                        <!--前景色及边框-->
+                        <Border x:Name="Fore" BorderThickness="0" CornerRadius="3">
+                            <!--按钮内容-->
+                            <TextBlock x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                    </Border>
+                    <!--触发器-->
+                    <ControlTemplate.Triggers>
+                        <!--鼠标移入移出-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#4F97FA"/>
+                        </Trigger>
+                        <!--按钮按下弹起-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#2268D1"/>
+                        </Trigger>
+                        <!--按钮失效-->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#B444"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--定义文本框样式-->
+    <Style TargetType="TextBox">
+        <Setter Property="Foreground" Value="#000"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <!--控件模板-->
+                <ControlTemplate>
+                    <!--背景、边框-->
+                    <Border x:Name="border" BorderBrush="#ccc"  BorderThickness="0,0,0,1" SnapsToDevicePixels="True" Background="Transparent">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"></ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MainColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MainColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--<MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>-->
+        </Style.Triggers>
+    </Style>
+    <!--定义文本框样式-->
+    <Style TargetType="DatePickerTextBox">
+        <Setter Property="Foreground" Value="#000"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <!--控件模板-->
+                <ControlTemplate>
+                    <!--背景、边框-->
+                    <Border x:Name="border" BorderBrush="#ccc"  BorderThickness="0,0,0,1" SnapsToDevicePixels="True" Background="Transparent">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"></ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MainColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MainColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!--<MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>-->
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid>
+                        <DockPanel x:Name="PART_Track" LastChildFill="false" Background="Transparent">
+                            <Rectangle  x:Name="PART_Indicator" Fill="{TemplateBinding Foreground}"></Rectangle>
+                        </DockPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--这里是ListBox样式-->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Name="g" Background="Transparent">
+                        <ContentPresenter />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ListBox.AlternationIndex" Value="0">
+                            <Setter TargetName="g" Property="Background" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="ListBox.AlternationIndex" Value="1">
+                            <Setter TargetName="g" Property="Background" Value="{DynamicResource RowHighlight3}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="g" Property="Background" Value="{DynamicResource RowHighlight}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="g" Property="Background" Value="{DynamicResource RowHighlight2}"/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--滚动条样式-->
+    <ControlTemplate x:Key="ct" TargetType="{x:Type Thumb}">
+        <Border x:Name="bg" Background="#66666666" CornerRadius="4">
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsDragging" Value="True">
+                <Setter TargetName="bg" Property="Background" Value="#66999999"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bg" Property="Background" Value="#66999999"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="MinWidth" Value="8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.00001*"/>
+                        </Grid.RowDefinitions>
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Track.Thumb>
+                                <Thumb Template="{StaticResource ct}"/>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Height" Value="8"/>
+                <Setter Property="MinHeight" Value="8"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.00001*"/>
+                                </Grid.ColumnDefinitions>
+                                <Track x:Name="PART_Track" IsEnabled="{TemplateBinding IsMouseOver}">
+                                    <Track.Thumb>
+                                        <Thumb Template="{StaticResource ct}"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="iconfont2" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/KxLib.UI;Component/Resources/#iconfont"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#666"/>
+    </Style>
+    <!--定义工具栏按钮样式-->
+    <Style x:Key="ToolbarButton" TargetType="Button">
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Width" Value="28"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Back" Background="Transparent">
+                        <Border BorderThickness="0" Background="Transparent">
+                            <TextBlock x:Name="Fore" Text="{TemplateBinding  Content}" Style="{DynamicResource iconfont2}"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" TargetName="Fore" Value="#999"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" TargetName="Fore" Value="#999"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ToolbarButtonSelect" TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Back" Background="Transparent">
+                        <Border BorderThickness="0" Background="Transparent">
+                            <TextBlock x:Name="Fore" Text="{TemplateBinding Content}" Style="{DynamicResource iconfont2}" Foreground="{DynamicResource MainColor}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--自定义回退按钮-->
+    <Style x:Key="BackButton" TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20,0,40,0">
+                            <TextBlock x:Name="ForeIcon" Text="&#xe67b;" FontFamily="/KxLib.UI;Component/Resources/#iconfont" FontSize="{TemplateBinding FontSize}" VerticalAlignment="Center" />
+                            <TextBlock x:Name="Fore" Text="{TemplateBinding Content}" FontSize="{TemplateBinding FontSize}" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" TargetName="ForeIcon" Value="#999"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#999"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" TargetName="ForeIcon" Value="#999"/>
+                            <Setter Property="Foreground" TargetName="Fore" Value="#999"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--自定义ListView-->
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border Name="Border" BorderThickness="0" Background="{x:Null}">
+                        <ScrollViewer Style="{DynamicResource ListViewScrollViewerStyle1}">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ListViewScrollViewerStyle1" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel Margin="{TemplateBinding Padding}">
+                            <ScrollViewer DockPanel.Dock="Top" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                                <GridViewHeaderRowPresenter AllowsColumnReorder="{Binding TemplatedParent.View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}" ColumnHeaderContainerStyle="{Binding TemplatedParent.View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}" ColumnHeaderToolTip="{Binding TemplatedParent.View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}" ColumnHeaderContextMenu="{Binding TemplatedParent.View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}" ColumnHeaderTemplate="{Binding TemplatedParent.View.ColumnHeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}" Columns="{Binding TemplatedParent.View.Columns, RelativeSource={RelativeSource TemplatedParent}}" Margin="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" KeyboardNavigation.DirectionalNavigation="Local" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </DockPanel>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar" Cursor="Arrow" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+                        <ScrollBar x:Name="PART_VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Orientation="Vertical" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
+                        <DockPanel Background="{Binding Background, ElementName=PART_VerticalScrollBar}" Grid.Column="1" LastChildFill="False" Grid.Row="1">
+                            <Rectangle DockPanel.Dock="Left" Fill="White" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Width="1"/>
+                            <Rectangle DockPanel.Dock="Top" Fill="White" Height="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                        </DockPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                    <Grid Name="g" Background="Transparent">
+                        <Border Name="bd" BorderThickness="1" BorderBrush="#6666">
+                            <TextBlock Margin="5,4,1,3" Foreground="#cccccc" Text="{TemplateBinding Content}" Style="{DynamicResource ResourceKey={x:Type TextBlock}}"/>
+                            <!--
+                            <ContentPresenter Margin="5,4,1,3"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            -->
+                        </Border>
+                        <Thumb Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-1,0" Visibility="Collapsed">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Border x:Name="b">
+                                        <Rectangle Width="1" Name="rec">
+                                        </Rectangle>
+                                    </Border>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="g" Property="Background" Value="{DynamicResource HeaderHighlight}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ListViewItem}">
+        <Style.Setters>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="bd" BorderThickness="0">
+                            <StackPanel x:Name="panel" Background="Blue">
+                                <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="panel" Property="Background" Value="{DynamicResource RowHighlight}"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Trigger.Setters>
+                                    <Setter TargetName="panel" Property="Background" Value="{DynamicResource RowHighlight2}"/>
+                                </Trigger.Setters>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <!-- 自定义DataGrid样式 -->
+    <Style TargetType="DataGrid">
+        <!--网格线颜色-->
+        <Setter Property="AlternationCount" Value="2"/>
+        <Setter Property="CanUserResizeColumns" Value="false"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="RowHeaderWidth" Value="0"/>
+        <Setter Property="HorizontalGridLinesBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalGridLinesBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="DataGridColumnHeader" >
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid Name="g" Background="Transparent">
+                        <Border Name="bd" BorderBrush="{DynamicResource RowBorderColor}" BorderThickness="0,0,0,1">
+                            <TextBlock Margin="8,4,4,4" Text="{TemplateBinding Content}" Foreground="#666"/>
+                        </Border>
+                        <Thumb Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-1,0">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Rectangle Width="1" Name="rec" Fill="{DynamicResource RowBorderColor}"/>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="g" Property="Background" Value="{DynamicResource HeaderHighlight}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="DataGridRowHeader">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                    <Grid Name="g" Background="Transparent">
+                        <Border Name="bd" BorderThickness="0">
+                            <TextBlock Margin="4" Text="{TemplateBinding Content}" Foreground="{DynamicResource DefaultTextColor}" TextAlignment="Right"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaultTextColor}" />
+        <Style.Triggers>
+            <!--隔行换色-->
+            <Trigger Property="AlternationIndex" Value="0" >
+                <Setter Property="Background" Value="#00ffffff" />
+            </Trigger>
+            <Trigger Property="AlternationIndex" Value="1" >
+                <Setter Property="Background" Value="{DynamicResource RowHighlight3}" />
+            </Trigger>
+            
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource RowHighlight}"/>
+            </Trigger>
+
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource RowHighlight2}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--单元格样式触发-->
+    <Style TargetType="DataGridCell">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <ContentPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border x:Name="Border" CornerRadius="0" Margin="4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="4" ShadowDepth="0" Color="#00000000"/>
+                        </Border.Effect>
+                        <Border x:Name="BorderBack" Margin="4" CornerRadius="0" Background="{DynamicResource BackgroundColor}">
+                            <ItemsPresenter/>
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Border MinWidth="80" CornerRadius="0" Background="Transparent" x:Name="g">
+                        <StackPanel x:Name="sp" Orientation="Horizontal" Margin="4">
+                            <!--<TextBlock Text=" "/>
+                            <ContentPresenter ContentSource="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBlock Text="   "/>-->
+                            <ContentPresenter x:Name="text" ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="g" Property="Background" Value="{DynamicResource RowHighlight}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="text" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                        <Trigger Property="Header" Value="-">
+                            <Trigger.Setters>
+                                <Setter TargetName="g" Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter TargetName="g" Property="BorderBrush" Value="#6666"/>
+                                <Setter TargetName="sp" Property="Visibility" Value="Collapsed"/>
+                            </Trigger.Setters>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 需要继承的 -->
+
+    <!-- 主色调 -->
+    <SolidColorBrush x:Key="MainColor" Color="#DCDDE3"/>
+    <!-- 背景颜色 -->
+    <SolidColorBrush x:Key="BackgroundColor" Color="#fff"/>
+    <SolidColorBrush x:Key="MenuBackgroundColor" Color="#FAFAFC"/>
+    <!-- TextBlock默认字体颜色 -->
+    <SolidColorBrush x:Key="TitleTextColor" Color="#001B2F"/>
+    <SolidColorBrush x:Key="DefaultTextColor" Color="#000"/>
+    <!-- ListView颜色 RowHighlight 经过 1选中 2交替 -->
+    <SolidColorBrush x:Key="RowBorderColor" Color="#66666666" />
+    <SolidColorBrush x:Key="HeaderHighlight" Color="#2aaa" />
+    <SolidColorBrush x:Key="RowHighlight" Color="#3aaa" />
+    <SolidColorBrush x:Key="RowHighlight2" Color="#5aaa" />
+    <SolidColorBrush x:Key="RowHighlight3" Color="#1aaa" />
+</ResourceDictionary>

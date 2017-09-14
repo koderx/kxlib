@@ -380,12 +380,8 @@ namespace KxLib.Utilities {
         ///<param name="URL">文件URL地址</param>
         ///<param name="fileName">文件保存路径,含文件名(如:C:\test.jpg)</param>
         public void DownloadFile(string URL, string fileName) {
-            requestHeaders.Add("Connection", "close");
-            SendRequestData(URL, "GET");
-            FileStream fs = new FileStream(fileName, FileMode.Create);
-            SaveNetworkStream(fs, true);
-            fs.Close();
-            fs = null;
+            WebClient df = new WebClient();
+            df.DownloadFile(URL, fileName);
         }
         ///<summary>
         ///向服务器发送请求
@@ -395,7 +391,7 @@ namespace KxLib.Utilities {
         ///<param name="showProgress">是否显示上传进度</param>
         private void SendRequestData(string URL, string method, bool showProgress) {
             if (URL.ToLower().StartsWith("https")) {
-                Console.WriteLine("https连接");
+                Logger.Log($"https连接 {URL}");
                 ServicePointManager.ServerCertificateValidationCallback = CheckValidationResult;
             }
             //clientSocket = new TcpClient();

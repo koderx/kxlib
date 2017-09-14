@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace KxLib.Utilities {
+namespace KxLib.UI {
     public static class WindowHelper {
         /// <summary>
         /// 使窗体不可触碰

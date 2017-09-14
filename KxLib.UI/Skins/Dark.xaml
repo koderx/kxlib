@@ -1,0 +1,88 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 标题栏背景颜色 -->
+    <Style x:Key="HeadStyle" TargetType="Border">
+        <Setter Property="Background" Value="#232326"></Setter>
+    </Style>
+
+    <!--定义控制栏按钮样式-->
+    <Style x:Key="ControlButton" TargetType="Button">
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Back" Background="Transparent">
+                        <TextBlock x:Name="Fore" Text="{TemplateBinding Content}" Style="{DynamicResource iconfont}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                            <Setter Property="Border.CornerRadius" TargetName="Back" Value="10"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Foreground" TargetName="Fore" Value="#FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ControlCloseButton" TargetType="Button" BasedOn="{StaticResource ControlButton}">
+
+    </Style>
+    
+    <!--定义分割线样式-->
+    <Style TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#232326"/>
+    </Style>
+    <!--定义按钮样式-->
+    <Style TargetType="Button">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Foreground" Value="#ddd"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <!--控件模板-->
+                <ControlTemplate TargetType="Button">
+                    <!--背景色-->
+                    <Border x:Name="Back" Opacity="1" CornerRadius="3" Background="#25272B">
+                        <!--前景色及边框-->
+                        <Border x:Name="Fore" BorderThickness="0" CornerRadius="3">
+                            <!--按钮内容-->
+                            <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding  Content}" />
+                        </Border>
+                    </Border>
+                    <!--触发器-->
+                    <ControlTemplate.Triggers>
+                        <!--鼠标移入移出-->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#2C2E32"/>
+                        </Trigger>
+                        <!--按钮按下弹起-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="Back" Value="#25272B"/>
+                        </Trigger>
+                        <!--按钮失效-->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#B444"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- 需要继承的 -->
+
+    <!-- 主特征色调 -->
+    <SolidColorBrush x:Key="MainColor" Color="#B82525"/>
+    <!-- 背景颜色 -->
+    <SolidColorBrush x:Key="BackgroundColor" Color="#16181C"/>
+    <SolidColorBrush x:Key="MenuBackgroundColor" Color="#302F33"/>
+    <!-- TextBlock默认字体颜色 -->
+    <SolidColorBrush x:Key="TitleTextColor" Color="#DCDDE3"/>
+    <SolidColorBrush x:Key="DefaultTextColor" Color="#DCDDE3"/>
+</ResourceDictionary>
